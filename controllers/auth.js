@@ -7,8 +7,8 @@ const {
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const { formatError } = require("../utils/utils");
-const { POWER_HASH, SECRET_KEY } = require("dotenv").config().parsed;
 
+require('dotenv').config()
 const register = async (req, res) => {
   try {
     const { user_name, email, password } = req.body;
@@ -20,14 +20,14 @@ const register = async (req, res) => {
     if (ExistUser) {
       return res.status(404).json({ message: {email:["email already taken  !"] }});
     }
-    const hashPassword = await bcryptjs.hash(password, +POWER_HASH);
+    const hashPassword = await bcryptjs.hash(password, +process.env.POWER_HASH);
     const user = new User({ user_name, email, password: hashPassword });
     await user.save();
 
     const profile = new Profile({ user: user._id });
     await profile.save();
 
-    const token = jwt.sign({ _id: user._id }, SECRET_KEY);
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
 
     res.status(201).json({
       token,
@@ -58,7 +58,7 @@ const login = async (req, res) => {
       return res.status(404).json({ message: "Profile not found!" });
     }
 
-    const token = jwt.sign({ _id: user._id }, SECRET_KEY);
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
     res.status(201).json({
       token,
       message: "You are login successfully. Welcome back!",

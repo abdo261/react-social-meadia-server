@@ -1,4 +1,4 @@
-const { required } = require("joi");
+
 const { Schema, model } = require("mongoose");
 
 const LikeSchema = new Schema(

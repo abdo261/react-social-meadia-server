@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = require('dotenv').config().parsed;
 
+require('dotenv').config()
 const isAuth = async (req, res, next) => {
 
   try {
@@ -15,7 +15,7 @@ const isAuth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: "Token missing" });
     }
-    const payload = jwt.verify(token, SECRET_KEY);
+    const payload = jwt.verify(token, process.env.SECRET_KEY);
     if (!payload) {
       return res.status(401).json({ message: "Invalid token" });
     }

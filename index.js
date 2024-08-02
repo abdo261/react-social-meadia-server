@@ -9,7 +9,8 @@ const CommentRouter = require("./routers/comment");
 const BookmarkRouter = require("./routers/bookmark");
 const cors = require('cors')
 const app = express();
-const { PORT, } = require("dotenv").config().parsed;
+
+require('dotenv').config(); 
 require("./config/connection");
 app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:3001'],
@@ -35,4 +36,4 @@ app.use('/images',imageRouter)
 app.use('/likes',LikeRouter)
 app.use('/comments',CommentRouter)
 app.use('/bookmarks',BookmarkRouter)
-app.listen(PORT, () => console.log(`server raning in port ${PORT}`));
+app.listen(process.env.PORT || 5000, () => console.log(`server raning in port ${process.env.PORT}`));

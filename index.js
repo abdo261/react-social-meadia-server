@@ -35,4 +35,4 @@ app.use('/images',imageRouter)
 app.use('/likes',LikeRouter)
 app.use('/comments',CommentRouter)
 app.use('/bookmarks',BookmarkRouter)
-app.listen(PORT, () => console.log(`server raning in port ${PORT}`));
+app.listen(PORT  || 5000, () => console.log(`server raning in port ${PORT}`));

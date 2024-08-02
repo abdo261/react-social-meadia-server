@@ -83,7 +83,7 @@ const getUserFollowers = async (req, res) => {
     );
 
     if (!follows.length) {
-      return res.status(404).json({ message: "This user has no followers." });
+      return res.status(200).json([]);
     }
 
   

@@ -47,8 +47,8 @@ const getUserFollowing = async (req, res) => {
 
     if (!follows.length) {
       return res
-        .status(404)
-        .json({ message: "This user is not following anyone." });
+        .status(200)
+        .json([]);
     }
 
    

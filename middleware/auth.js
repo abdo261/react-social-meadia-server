@@ -1,17 +1,14 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-require('dotenv').config()
+require("dotenv").config();
 const isAuth = async (req, res, next) => {
-
   try {
-    console.log('Incoming Headers:', req.headers);
-    
     const authHeader = req.headers.authorization;
-    console.log('Authorization Header:', authHeader);
+    
     if (!authHeader) {
       return res.status(401).json({ message: "Authorization header missing" });
     }
-    const token = authHeader?.split(' ')[1];
+    const token = authHeader?.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Token missing" });
     }
@@ -22,14 +19,13 @@ const isAuth = async (req, res, next) => {
     req._id = payload._id;
     next();
   } catch (error) {
-
-    if (error.name === 'JsonWebTokenError') {
+    if (error.name === "JsonWebTokenError") {
       return res.status(401).json({ message: "Invalid token" });
     }
-    if (error.name === 'TokenExpiredError') {
+    if (error.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token expired" });
     }
-console.log(error)
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

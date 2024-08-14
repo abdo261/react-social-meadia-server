@@ -40,7 +40,7 @@ const createPost = async (req, res) => {
     }
 
     const savedPost = await post.save();
-    res.status(201).json(savedPost);
+    res.status(201).json({post:savedPost,message:'post Created Successfelly'});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error." });
@@ -496,21 +496,21 @@ const deletePost = async (req, res) => {
   try {
     const { postId } = req.params; // Get post ID from URL params
 
-    // Validate post ID and check if post exists
+   
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    // Delete images associated with the post
+
     if (post.images && post.images.length > 0) {
       deleteOldImages(post.images);
     }
 
-    // Delete the post from the database
+ 
     await Post.findByIdAndDelete(postId);
 
-    res.status(200).json({ message: "Post deleted successfully" });
+    res.status(200).json({ message: "Post deleted successfully",_id:postId });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error." });

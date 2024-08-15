@@ -36,6 +36,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.log(error)
   }
 };
 const login = async (req, res) => {
@@ -66,6 +67,7 @@ const login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.log(error)
   }
 };
 module.exports = { register, login };

@@ -13,7 +13,7 @@ const app = express();
 require('dotenv').config(); 
 require("./config/connection");
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001','https://react-social-meadia-client.vercel.app'],
+  origin: ['http://localhost:3000', 'http://localhost:3001','https://react-social-meadia-client-781suvnzf.vercel.app/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));

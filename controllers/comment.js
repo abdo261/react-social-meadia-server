@@ -61,15 +61,15 @@ const getCommentsWithUserProfiles = async (req, res) => {
 };
 const getCommentsByPostId = async (req, res) => {
   try {
-    const { postId } = req.params; // Assuming you're sending the postId in the request params
+    const { postId } = req.params; 
 
     // Validate input
     if (!postId) {
       return res.status(400).json({ message: 'Invalid input: postId is required' });
     }
 
-    // Fetch comments for the given post ID
-    const comments = await Comment.find({ post: postId }).lean(); // .lean() to return plain JavaScript objects
+   
+    const comments = await Comment.find({ post: postId }).lean(); 
 
     if (!comments.length) {
       return res.status(404).json({ message: 'No comments found for this post' });
@@ -82,18 +82,15 @@ const getCommentsByPostId = async (req, res) => {
       return res.status(200).json(comments.map(comment => ({ ...comment, user: null })));
     }
 
-    // Fetch users with their profiles
+    
     const users = await User.find({ _id: { $in: userIds } })
-      .select('user_name')
-      // .populate({
-      //   path: 'profile',
-      //   select: 'image'
-      // })
-      // .lean();
+      .select('user_name _id')
+      
 console.log(users)
     // Create a map for users by their IDs
     const userMap = users.reduce((map, user) => {
       map[user._id] = {
+        _id:user._id,
         user_name: user.user_name,
         profileImage: user.profile ? user.profile.image : null
       };
@@ -110,7 +107,7 @@ console.log(users)
       };
     });
 
-    // Return the comments with populated user data
+   
     res.status(200).json(transformedComments);
   } catch (error) {
     console.error(error);
@@ -120,7 +117,7 @@ console.log(users)
 
 const create = async (req, res) => {
   if (!req._id) {
-    return res.status(400).json({ message: "You should connect first." });
+    return res.status(401).json({ message: "You should connect first." });
   }
   try {
     const { content } = req.body;
